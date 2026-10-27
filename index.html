@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f8fc">
+    <meta name="description" content="A friendly, live weather forecast with the details that help you plan your day.">
+    <title>Daylight — Weather, at a glance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Daylight home">
+          <span class="brand-mark" aria-hidden="true"><span></span></span>
+          <span>daylight<span class="brand-period">.</span></span>
+        </a>
+        <form class="search-form" id="search-form" role="search">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.2 4.2"></path></svg>
+          <label class="sr-only" for="location-search">Search for a city</label>
+          <input id="location-search" name="location" type="search" placeholder="Search any city..." autocomplete="off" required>
+          <button type="submit" aria-label="Search">↵</button>
+        </form>
+        <div class="topbar-note"><span class="live-dot"></span> LIVE FORECAST</div>
+      </header>
+
+      <section class="intro">
+        <p class="eyebrow">YOUR LITTLE LOOK AT THE SKY</p>
+        <h1>A brighter way to<br class="mobile-break"> check the weather<span>.</span></h1>
+        <p class="intro-copy">A little sunshine, a little heads-up. Here's what's happening out there.</p>
+      </section>
+
+      <div id="status-message" class="status-message" role="status" aria-live="polite"></div>
+      <section class="weather-grid" id="weather-content" aria-label="Weather forecast" aria-busy="true">
+        <article class="card current-card">
+          <div class="current-heading">
+            <div>
+              <p class="eyebrow">RIGHT NOW</p>
+              <h2 id="location-name">Finding your forecast...</h2>
+              <p class="location-meta" id="location-meta">Live conditions, just for you</p>
+            </div>
+            <div class="unit-toggle" aria-label="Temperature units">
+              <button type="button" class="unit-button is-selected" data-unit="celsius" aria-pressed="true">°C</button>
+              <button type="button" class="unit-button" data-unit="fahrenheit" aria-pressed="false">°F</button>
+            </div>
+          </div>
+          <div class="current-main">
+            <div class="temperature-wrap">
+              <span class="current-temperature" id="current-temperature">--</span><span class="temperature-degree">°</span>
+            </div>
+            <div class="condition-wrap">
+              <span class="weather-icon current-icon" id="current-icon" aria-hidden="true">☀️</span>
+              <p class="condition-name" id="condition-name">Loading forecast</p>
+              <p class="feels-like" id="feels-like">Feels like --°</p>
+            </div>
+          </div>
+          <div class="sun-strip">
+            <span class="sun-icon" aria-hidden="true">☀</span>
+            <span id="sunrise-label">Sunrise --:--</span>
+            <div class="sun-track"><span class="sun-track-dot"></span></div>
+            <span id="sunset-label">Sunset --:--</span>
+            <span class="sun-icon sunset-icon" aria-hidden="true">◒</span>
+          </div>
+          <div class="current-footer">
+            <span><span class="live-dot"></span> Updated <span id="updated-time">--</span></span>
+            <span>Feels like the day has plans.</span>
+          </div>
+        </article>
+
+        <article class="card details-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">THE LITTLE DETAILS</p><h2>At a glance</h2></div>
+            <span class="heading-sparkle" aria-hidden="true">✳</span>
+          </div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-icon humidity-icon" aria-hidden="true">⌁</span>
+              <span class="detail-label">Humidity</span>
+              <strong class="detail-value" id="humidity-value">--%</strong>
+              <span class="detail-hint" id="humidity-hint">In the air</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon wind-icon" aria-hidden="true">↗</span>
+              <span class="detail-label">Wind</span>
+              <strong class="detail-value" id="wind-value">-- <small>km/h</small></strong>
+              <span class="detail-hint">A gentle breeze</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon rain-icon" aria-hidden="true">◌</span>
+              <span class="detail-label">Rain chance</span>
+              <strong class="detail-value" id="rain-value">--%</strong>
+              <span class="detail-hint">Worth a look outside</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon feels-icon" aria-hidden="true">♧</span>
+              <span class="detail-label">Feels like</span>
+              <strong class="detail-value" id="detail-feels-value">--°</strong>
+              <span class="detail-hint">What you'll notice</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card hourly-card">
+          <div class="card-heading forecast-heading">
+            <div><p class="eyebrow">THE NEXT FEW HOURS</p><h2>Today, hour by hour</h2></div>
+            <span class="forecast-caption">A little look ahead <span aria-hidden="true">→</span></span>
+          </div>
+          <div class="hourly-list" id="hourly-list"></div>
+        </article>
+
+        <article class="card weekly-card">
+          <div class="card-heading forecast-heading">
+            <div><p class="eyebrow">MAKE A PLAN</p><h2>The next 7 days</h2></div>
+            <span class="week-note"><span aria-hidden="true">✦</span> A week of possibilities</span>
+          </div>
+          <div class="daily-list" id="daily-list"></div>
+          <p class="data-credit">Forecast data by <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> · Free weather forecast</p>
+        </article>
+      </section>
+      <footer class="page-footer"><span>Made for curious skies <span aria-hidden="true">✿</span></span><span>Take the day as it comes.</span></footer>
+    </main>
+  </body>
+</html>
